@@ -1,5 +1,5 @@
 import express from "express";
-import * as inventoriController from '../controller/inventoriController.js'
+import * as inventoriController from "../controller/inventoriController.js";
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post('/add-barang', inventoriController.addBarang)
-
+router.post("/add-barang", inventoriController.addBarang);
+router.delete("/delete-barang/:id", inventoriController.deleteBarang);
 
 export default router;
