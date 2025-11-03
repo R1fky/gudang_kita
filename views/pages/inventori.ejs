@@ -1,0 +1,44 @@
+<div class="inventory-page container-fluid py-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <div>
+      <h3 class="fw-semibold mb-1">Inventori Barang</h3>
+      <p class="text-muted mb-0">Kelola dan pantau stok barang di gudang Anda</p>
+    </div>
+    <button class="btn btn-primary d-flex align-items-center" id="addItemBtn"><i class="fas fa-plus me-2"></i> Tambah Barang</button>
+  </div>
+
+  <!-- Card Container -->
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+        <h5 class="card-title mb-2">Daftar Inventori</h5>
+
+        <!-- Search & Filter -->
+        <div class="d-flex gap-2 flex-wrap">
+          <div class="position-relative">
+            <i class="fas fa-search position-absolute" style="top: 50%; left: 12px; transform: translateY(-50%); color: #aaa"></i>
+            <input type="text" class="form-control ps-5" id="searchInput" placeholder="Cari barang..." style="min-width: 220px" />
+          </div>
+          <select class="form-select" id="categoryFilter" style="min-width: 160px">
+            <option value="">Semua Kategori</option>
+            <option value="elektronik">Elektronik</option>
+            <option value="makanan">Makanan</option>
+            <option value="pakaian">Pakaian</option>
+            <option value="peralatan">Peralatan</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state text-center py-5">
+        <i class="fas fa-boxes mb-3" style="font-size: 60px; color: #b0b0b0"></i>
+        <h6 class="text-muted mb-1">Belum ada data inventori</h6>
+        <p class="text-secondary">Tambahkan data barang baru untuk mulai mengelola inventori Anda.</p>
+        <button class="btn btn-outline-primary mt-2" id="emptyAddBtn"><i class="fas fa-plus me-1"></i> Tambah Barang Pertama</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/inventory.js"></script>

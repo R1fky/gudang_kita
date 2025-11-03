@@ -1,0 +1,62 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <i class="fas fa-warehouse"></i>
+      <h2>Warehouse</h2>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <li class="nav-item <%= page === 'dashboard' ? 'active' : '' %>">
+        <a href="/" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item <%= page === 'inventory' ? 'active' : '' %>">
+        <a href="/inventory" class="nav-link">
+          <i class="fas fa-boxes"></i>
+          <span>Inventori</span>
+        </a>
+      </li>
+
+      <li class="nav-item <%= page === 'incoming' ? 'active' : '' %>">
+        <a href="/incoming" class="nav-link">
+          <i class="fas fa-arrow-down"></i>
+          <span>Barang Masuk</span>
+        </a>
+      </li>
+
+      <li class="nav-item <%= page === 'outgoing' ? 'active' : '' %>">
+        <a href="/outgoing" class="nav-link">
+          <i class="fas fa-arrow-up"></i>
+          <span>Barang Keluar</span>
+        </a>
+      </li>
+
+      <li class="nav-item <%= page === 'reports' ? 'active' : '' %>">
+        <a href="/reports" class="nav-link">
+          <i class="fas fa-chart-line"></i>
+          <span>Laporan</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-details">
+        <p class="user-name">Admin User</p>
+        <p class="user-role">Administrator</p>
+      </div>
+    </div>
+    <button class="logout-btn">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+</aside>

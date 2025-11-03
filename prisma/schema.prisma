@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  PETUGAS
+  VIEWER
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  nama       String
+  username   String    @unique
+  password   String
+  role       Role      @default(VIEWER)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  transaksiMasuk   TransaksiMasuk[]
+  transaksiKeluar  TransaksiKeluar[]
+  logAktivitas     LogAktivitas[]
+}
+
+model Kategori {
+  id         Int       @id @default(autoincrement())
+  nama       String
+  deskripsi  String?
+  barang     Barang[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Barang {
+  id          Int       @id @default(autoincrement())
+  nama        String
+  stok        Int        @default(0)
+  satuan      String
+  harga       Float
+  kategoriId  Int
+  kategori    Kategori   @relation(fields: [kategoriId], references: [id])
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  transaksiMasuk   TransaksiMasuk[]
+  transaksiKeluar  TransaksiKeluar[]
+}
+
+model TransaksiMasuk {
+  id          Int       @id @default(autoincrement())
+  barangId    Int
+  jumlah      Int
+  tanggal     DateTime  @default(now())
+  userId      Int
+  keterangan  String?
+  barang      Barang    @relation(fields: [barangId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+model TransaksiKeluar {
+  id          Int       @id @default(autoincrement())
+  barangId    Int
+  jumlah      Int
+  tanggal     DateTime  @default(now())
+  userId      Int
+  keterangan  String?
+  barang      Barang    @relation(fields: [barangId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+model LogAktivitas {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  aksi        String
+  waktu       DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+}
