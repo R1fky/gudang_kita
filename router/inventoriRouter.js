@@ -12,5 +12,6 @@ router.get("/", (req, res) => {
 
 router.post("/add-barang", inventoriController.addBarang);
 router.delete("/delete-barang/:id", inventoriController.deleteBarang);
+router.patch("/update-barang/:id", inventoriController.updateBarang);
 
 export default router;

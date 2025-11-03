@@ -61,3 +61,38 @@ export const deleteBarang = async (req, res) => {
     });
   }
 };
+
+export const updateBarang = async (req, res) => {
+  try {
+    const barangId = Number(req.params.id);
+    console.log(barangId);
+    const { nama, stok, satuan, harga, kategori_id } = req.body;
+
+    const existingBarang = await prisma.barang.findUnique({
+      where: { id: Number(barangId) },
+    });
+
+    if (!existingBarang) {
+      return res.status(404).json({
+        message: `Barang dengan nama "${nama}" tidak ditemukan`,
+      });
+    }
+    const updateBarang = await prisma.barang.update({
+      where: { id: Number(barangId) },
+      data: {
+        ...(nama && { nama }),
+        ...(stok && { stok: Number(stok) }),
+        ...(satuan && { satuan }),
+        ...(harga && { harga: Number(harga) }),
+        ...(kategori_id && { kategoriId: Number(kategori_id) }),
+      },
+    });
+
+    return res.json({
+      message: "Data Berhasil di Update",
+      data: updateBarang,
+    });
+  } catch (error) {
+    return res.json({ message: "Barang Tidak Berhail di Update" + error });
+  }
+};
