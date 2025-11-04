@@ -1,58 +1,98 @@
-<div class="dashboard">
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-icon blue">
-        <i class="fas fa-boxes"></i>
-      </div>
-      <div class="stat-details">
-        <h3>Total Barang</h3>
-        <p class="stat-number">1,234</p>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon green">
-        <i class="fas fa-arrow-down"></i>
-      </div>
-      <div class="stat-details">
-        <h3>Barang Masuk</h3>
-        <p class="stat-number">456</p>
+<div class="container-fluid px-4 py-4">
+  <!-- Stats Cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="stat-icon bg-primary bg-opacity-10 rounded-3 p-3 me-3">
+              <i class="bi bi-boxes fs-3 text-primary"></i>
+            </div>
+            <div>
+              <p class="text-muted mb-1 small text-uppercase fw-semibold">Total Barang</p>
+              <h3 class="mb-0 fw-bold">1,234</h3>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-icon orange">
-        <i class="fas fa-arrow-up"></i>
-      </div>
-      <div class="stat-details">
-        <h3>Barang Keluar</h3>
-        <p class="stat-number">321</p>
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="stat-icon bg-success bg-opacity-10 rounded-3 p-3 me-3">
+              <i class="bi bi-arrow-down-circle fs-3 text-success"></i>
+            </div>
+            <div>
+              <p class="text-muted mb-1 small text-uppercase fw-semibold">Barang Masuk</p>
+              <h3 class="mb-0 fw-bold">456</h3>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-icon red">
-        <i class="fas fa-exclamation-triangle"></i>
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="stat-icon bg-warning bg-opacity-10 rounded-3 p-3 me-3">
+              <i class="bi bi-arrow-up-circle fs-3 text-warning"></i>
+            </div>
+            <div>
+              <p class="text-muted mb-1 small text-uppercase fw-semibold">Barang Keluar</p>
+              <h3 class="mb-0 fw-bold">321</h3>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="stat-details">
-        <h3>Stok Menipis</h3>
-        <p class="stat-number">12</p>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="stat-icon bg-danger bg-opacity-10 rounded-3 p-3 me-3">
+              <i class="bi bi-exclamation-triangle fs-3 text-danger"></i>
+            </div>
+            <div>
+              <p class="text-muted mb-1 small text-uppercase fw-semibold">Stok Menipis</p>
+              <h3 class="mb-0 fw-bold">12</h3>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="content-grid">
-    <div class="card">
-      <h3 class="card-title">Aktivitas Terbaru</h3>
-      <div class="activity-list">
-        <p class="empty-state">Data aktivitas akan ditampilkan di sini</p>
+  <!-- Content Cards -->
+  <div class="row g-4">
+    <div class="col-12 col-lg-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-bottom">
+          <h5 class="mb-0 fw-bold">Aktivitas Terbaru</h5>
+        </div>
+        <div class="card-body">
+          <div class="text-center py-5 text-muted">
+            <i class="bi bi-clock-history fs-1 mb-3 d-block"></i>
+            <p class="mb-0">Data aktivitas akan ditampilkan di sini</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <h3 class="card-title">Stok Terbatas</h3>
-      <div class="stock-list">
-        <p class="empty-state">Data stok terbatas akan ditampilkan di sini</p>
+    <div class="col-12 col-lg-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-bottom">
+          <h5 class="mb-0 fw-bold">Stok Terbatas</h5>
+        </div>
+        <div class="card-body">
+          <div class="text-center py-5 text-muted">
+            <i class="bi bi-exclamation-circle fs-1 mb-3 d-block"></i>
+            <p class="mb-0">Data stok terbatas akan ditampilkan di sini</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

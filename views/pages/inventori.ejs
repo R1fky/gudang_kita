@@ -1,44 +1,200 @@
-<div class="inventory-page container-fluid py-4">
-  <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-    <div>
-      <h3 class="fw-semibold mb-1">Inventori Barang</h3>
-      <p class="text-muted mb-0">Kelola dan pantau stok barang di gudang Anda</p>
-    </div>
-    <button class="btn btn-primary d-flex align-items-center" id="addItemBtn"><i class="fas fa-plus me-2"></i> Tambah Barang</button>
-  </div>
-
-  <!-- Card Container -->
-  <div class="card shadow-sm border-0 rounded-3">
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-        <h5 class="card-title mb-2">Daftar Inventori</h5>
-
-        <!-- Search & Filter -->
-        <div class="d-flex gap-2 flex-wrap">
-          <div class="position-relative">
-            <i class="fas fa-search position-absolute" style="top: 50%; left: 12px; transform: translateY(-50%); color: #aaa"></i>
-            <input type="text" class="form-control ps-5" id="searchInput" placeholder="Cari barang..." style="min-width: 220px" />
+<div class="container-fluid px-4 py-4">
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-bottom">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <h5 class="mb-0 fw-bold">Daftar Inventori</h5>
+        <div class="d-flex gap-2">
+          <!-- Search -->
+          <div class="input-group input-group-sm" style="width: 250px">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control" placeholder="Cari barang..." />
           </div>
-          <select class="form-select" id="categoryFilter" style="min-width: 160px">
-            <option value="">Semua Kategori</option>
-            <option value="elektronik">Elektronik</option>
-            <option value="makanan">Makanan</option>
-            <option value="pakaian">Pakaian</option>
-            <option value="peralatan">Peralatan</option>
-          </select>
+          <!-- Button Tambah -->
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#tambahBarangModal"><i class="bi bi-plus-circle me-1"></i>Tambah Barang</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <!-- Filter Section -->
+      <div class="p-3 border-bottom bg-light">
+        <div class="row g-2">
+          <div class="col-md-3">
+            <select class="form-select form-select-sm">
+              <option selected>Semua Kategori</option>
+              <option value="1">Elektronik</option>
+              <option value="2">Furniture</option>
+              <option value="3">Alat Tulis</option>
+              <option value="4">Makanan & Minuman</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select form-select-sm">
+              <option selected>Status Stok</option>
+              <option value="1">Stok Aman</option>
+              <option value="2">Stok Menipis</option>
+              <option value="3">Stok Habis</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select form-select-sm">
+              <option selected>Urutkan</option>
+              <option value="1">Nama A-Z</option>
+              <option value="2">Nama Z-A</option>
+              <option value="3">Stok Terbanyak</option>
+              <option value="4">Stok Tersedikit</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-sm btn-outline-secondary w-100"><i class="bi bi-arrow-clockwise me-1"></i>Reset Filter</button>
+          </div>
         </div>
       </div>
 
-      <!-- Empty State -->
-      <div class="empty-state text-center py-5">
-        <i class="fas fa-boxes mb-3" style="font-size: 60px; color: #b0b0b0"></i>
-        <h6 class="text-muted mb-1">Belum ada data inventori</h6>
-        <p class="text-secondary">Tambahkan data barang baru untuk mulai mengelola inventori Anda.</p>
-        <button class="btn btn-outline-primary mt-2" id="emptyAddBtn"><i class="fas fa-plus me-1"></i> Tambah Barang Pertama</button>
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="px-4">No</th>
+              <th>Kode Barang</th>
+              <th>Nama Barang</th>
+              <th>Kategori</th>
+              <th>Stok</th>
+              <th>Satuan</th>
+              <th>Harga</th>
+              <th>Status</th>
+              <th class="text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1 -->
+            <tr>
+              <td class="px-4">1</td>
+              <td><span class="badge bg-secondary">BRG001</span></td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="bg-primary bg-opacity-10 rounded p-2 me-2">
+                    <i class="bi bi-laptop text-primary"></i>
+                  </div>
+                  <div>
+                    <div class="fw-semibold">Laptop Dell XPS 15</div>
+                    <small class="text-muted">Intel Core i7, 16GB RAM</small>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge bg-info text-dark">Elektronik</span></td>
+              <td><strong>25</strong></td>
+              <td>Unit</td>
+              <td>Rp 15.000.000</td>
+              <td><span class="badge bg-success">Stok Aman</span></td>
+              <td class="text-center">
+                <div class="btn-group btn-group-sm" role="group">
+                  <button type="button" class="btn btn-outline-primary" title="Detail">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button type="button" class="btn btn-outline-warning" title="Edit">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button type="button" class="btn btn-outline-danger" title="Hapus">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="card-footer bg-white border-top">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div class="text-muted small">Menampilkan <strong>1-6</strong> dari <strong>25</strong> data</div>
+        <nav>
+          <ul class="pagination pagination-sm mb-0">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">
+                <i class="bi bi-chevron-left"></i>
+              </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class="bi bi-chevron-right"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
 </div>
 
-<script src="/js/inventory.js"></script>
+<!-- Modal Tambah Barang -->
+<div class="modal fade" id="tambahBarangModal" tabindex="-1" aria-labelledby="tambahBarangLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="tambahBarangLabel">Tambah Barang</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form id="formTambahBarang">
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="namaBarang" class="form-label">Nama Barang</label>
+              <input type="text" class="form-control" id="namaBarang" name="nama" placeholder="Masukkan nama barang" required />
+            </div>
+
+            <div class="col-md-6">
+              <label for="kategoriBarang" class="form-label">Kategori</label>
+              <select class="form-select" name="kategori" id="kategoriBarang" required>
+                <option value="" disabled selected>Pilih kategori</option>
+                <% kategoriList.forEach(kategori => { %>
+                <option value="<%= kategori.id %>"><%= kategori.nama %></option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="stokBarang" class="form-label">Stok</label>
+              <input type="number" class="form-control" id="stokBarang" name="stok" placeholder="Masukkan jumlah stok" required />
+            </div>
+
+            <!-- Input satuan (select) -->
+            <div class="col-md-6">
+              <label for="satuanBarang" class="form-label">Satuan</label>
+              <select class="form-select" id="satuanBarang" name="satuan" required>
+                <option value="" disabled selected>Pilih satuan</option>
+                <option value="pcs">pcs</option>
+                <option value="box">box</option>
+                <option value="liter">liter</option>
+                <option value="kg">kg</option>
+                <option value="meter">meter</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="hargaBarang" class="form-label">Harga (Rp)</label>
+              <input type="number" class="form-control" id="hargaBarang" name="harga" placeholder="Masukkan harga barang" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Modal Tambah Barang -->
+
+<script src="/js/pages/inventory.js"></script>

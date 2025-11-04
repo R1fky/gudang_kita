@@ -1,14 +1,35 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+export const getInventori = async (req, res) => {
+  try {
+    // const dataInventori = await prisma.barang.findMany({});
+    const kategoriList = await prisma.kategori.findMany({
+      select: { id: true, nama: true },
+    });
+
+    res.render("pages/inventori", {
+      title: "Inventory",
+      page: "inventory",
+      // data: dataInventori,
+      kategoriList: kategoriList,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      message: "Inventori tidak dapat dimuat" + error,
+    });
+  }
+};
+
 export const addBarang = async (req, res) => {
   try {
-    const { nama, stok, satuan, harga, kategori_id } = req.body;
+    const data = req.body;
 
     const existingBarang = await prisma.barang.findFirst({
       where: {
-        nama: nama,
-        kategoriId: Number(kategori_id),
+        nama: data.namaBarang,
+        kategoriId: Number(data.kategoriBarang),
       },
     });
 
@@ -18,23 +39,25 @@ export const addBarang = async (req, res) => {
       });
     }
 
-    const response = await prisma.barang.create({
+    await prisma.barang.create({
       data: {
-        nama: nama,
-        stok: Number(stok),
-        satuan: satuan,
-        harga: Number(harga),
-        kategoriId: Number(kategori_id),
+        nama: data.namaBarang,
+        stok: Number(data.stokBarang),
+        satuan: data.satuanBarang,
+        harga: Number(data.hargaBarang),
+        kategoriId: Number(data.kategoriBarang),
       },
     });
 
     return res.json({
-      message: "Data berhasil Di Masukkan",
-      data: response,
+      message: "Data berhasil Di Tambahkan",
+      success: true,
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       message: "Error:" + error,
+      success: false,
     });
   }
 };

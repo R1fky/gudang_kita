@@ -1,62 +1,85 @@
-<aside class="sidebar">
-  <div class="sidebar-header">
-    <div class="logo">
-      <i class="fas fa-warehouse"></i>
-      <h2>Warehouse</h2>
+<aside class="sidebar bg-white border-end" id="sidebar">
+  <!-- Sidebar Header -->
+  <div class="sidebar-header border-bottom p-4">
+    <div class="d-flex align-items-center">
+      <div class="logo-icon bg-primary bg-opacity-10 rounded-3 p-2 me-3">
+        <i class="bi bi-box-seam fs-4 text-primary"></i>
+      </div>
+      <div>
+        <h5 class="mb-0 fw-bold">Warehouse</h5>
+        <small class="text-muted">Monitoring System</small>
+      </div>
     </div>
   </div>
 
-  <nav class="sidebar-nav">
-    <ul class="nav-list">
-      <li class="nav-item <%= page === 'dashboard' ? 'active' : '' %>">
-        <a href="/" class="nav-link">
-          <i class="fas fa-home"></i>
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar-nav p-3">
+    <ul class="nav flex-column gap-1">
+      <li class="nav-item">
+        <a href="/" class="nav-link <%= page === 'dashboard' ? 'active' : '' %>">
+          <i class="bi bi-speedometer2 me-2"></i>
           <span>Dashboard</span>
         </a>
       </li>
 
-      <li class="nav-item <%= page === 'inventory' ? 'active' : '' %>">
-        <a href="/inventory" class="nav-link">
-          <i class="fas fa-boxes"></i>
+      <li class="nav-item">
+        <a href="/inventory" class="nav-link <%= page === 'inventory' ? 'active' : '' %>">
+          <i class="bi bi-boxes me-2"></i>
           <span>Inventori</span>
         </a>
       </li>
 
-      <li class="nav-item <%= page === 'incoming' ? 'active' : '' %>">
-        <a href="/incoming" class="nav-link">
-          <i class="fas fa-arrow-down"></i>
+      <li class="nav-item">
+        <a href="/incoming" class="nav-link <%= page === 'incoming' ? 'active' : '' %>">
+          <i class="bi bi-arrow-down-circle me-2"></i>
           <span>Barang Masuk</span>
         </a>
       </li>
 
-      <li class="nav-item <%= page === 'outgoing' ? 'active' : '' %>">
-        <a href="/outgoing" class="nav-link">
-          <i class="fas fa-arrow-up"></i>
+      <li class="nav-item">
+        <a href="/outgoing" class="nav-link <%= page === 'outgoing' ? 'active' : '' %>">
+          <i class="bi bi-arrow-up-circle me-2"></i>
           <span>Barang Keluar</span>
         </a>
       </li>
 
-      <li class="nav-item <%= page === 'reports' ? 'active' : '' %>">
-        <a href="/reports" class="nav-link">
-          <i class="fas fa-chart-line"></i>
+      <li class="nav-item">
+        <a href="/reports" class="nav-link <%= page === 'reports' ? 'active' : '' %>">
+          <i class="bi bi-file-earmark-bar-graph me-2"></i>
           <span>Laporan</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Divider -->
+    <hr class="my-3" />
+
+    <!-- Additional Links -->
+    <ul class="nav flex-column gap-1">
+      <li class="nav-item">
+        <a href="#" class="nav-link text-muted">
+          <i class="bi bi-gear me-2"></i>
+          <span>Pengaturan</span>
         </a>
       </li>
     </ul>
   </nav>
 
-  <div class="sidebar-footer">
-    <div class="user-info">
-      <div class="user-avatar">
-        <i class="fas fa-user"></i>
+  <!-- Sidebar Footer -->
+  <div class="sidebar-footer border-top p-3 mt-auto">
+    <div class="d-flex align-items-center">
+      <div class="flex-shrink-0">
+        <div class="user-avatar bg-primary text-white rounded-3 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px">
+          <i class="bi bi-person-fill fs-5"></i>
+        </div>
       </div>
-      <div class="user-details">
-        <p class="user-name">Admin User</p>
-        <p class="user-role">Administrator</p>
+      <div class="flex-grow-1 ms-3">
+        <h6 class="mb-0 fw-semibold">Admin User</h6>
+        <small class="text-muted">Administrator</small>
       </div>
+      <button class="btn btn-sm btn-outline-danger rounded-circle" id="logoutBtn" title="Logout">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
     </div>
-    <button class="logout-btn">
-      <i class="fas fa-sign-out-alt"></i>
-    </button>
   </div>
 </aside>
