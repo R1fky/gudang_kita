@@ -69,26 +69,30 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Row 1 -->
+            <% if (dataInventori.length === 0) { %>
             <tr>
-              <td class="px-4">1</td>
-              <td><span class="badge bg-secondary">BRG001</span></td>
+              <td colspan="9" class="text-center py-4 text-muted">Tidak ada data barang.</td>
+            </tr>
+            <% } else { %> <% dataInventori.forEach((barang, index) => { %>
+            <tr>
+              <td class="px-4"><%= index + 1 %></td>
+              <td><span class="badge bg-secondary">BRG<%= barang.id.toString().padStart(3, '0') %></span></td>
+              <td><%= barang.nama %></td>
               <td>
-                <div class="d-flex align-items-center">
-                  <div class="bg-primary bg-opacity-10 rounded p-2 me-2">
-                    <i class="bi bi-laptop text-primary"></i>
-                  </div>
-                  <div>
-                    <div class="fw-semibold">Laptop Dell XPS 15</div>
-                    <small class="text-muted">Intel Core i7, 16GB RAM</small>
-                  </div>
-                </div>
+                <span class="badge bg-info text-dark"> <%= barang.kategori ? barang.kategori.nama : "Tidak ada kategori" %> </span>
               </td>
-              <td><span class="badge bg-info text-dark">Elektronik</span></td>
-              <td><strong>25</strong></td>
-              <td>Unit</td>
-              <td>Rp 15.000.000</td>
-              <td><span class="badge bg-success">Stok Aman</span></td>
+              <td><strong><%= barang.stok %></strong></td>
+              <td><%= barang.satuan %></td>
+              <td>Rp <%= barang.harga.toLocaleString("id-ID") %></td>
+              <td>
+                <% if (barang.stok === 0) { %>
+                <span class="badge bg-danger">Stok Habis</span>
+                <% } else if (barang.stok <= 5) { %>
+                <span class="badge bg-warning text-dark">Stok Menipis</span>
+                <% } else { %>
+                <span class="badge bg-success">Stok Aman</span>
+                <% } %>
+              </td>
               <td class="text-center">
                 <div class="btn-group btn-group-sm" role="group">
                   <button type="button" class="btn btn-outline-primary" title="Detail">
@@ -103,6 +107,7 @@
                 </div>
               </td>
             </tr>
+            <% }) %> <% } %>
           </tbody>
         </table>
       </div>

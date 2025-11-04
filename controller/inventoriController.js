@@ -3,7 +3,11 @@ const prisma = new PrismaClient();
 
 export const getInventori = async (req, res) => {
   try {
-    // const dataInventori = await prisma.barang.findMany({});
+    const dataInventori = await prisma.barang.findMany({
+      include: {
+        kategori: true
+      }
+    });
     const kategoriList = await prisma.kategori.findMany({
       select: { id: true, nama: true },
     });
@@ -11,7 +15,7 @@ export const getInventori = async (req, res) => {
     res.render("pages/inventori", {
       title: "Inventory",
       page: "inventory",
-      // data: dataInventori,
+      dataInventori: dataInventori,
       kategoriList: kategoriList,
     });
   } catch (error) {
