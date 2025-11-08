@@ -36,9 +36,23 @@
         </div>
 
         <!-- Auth Buttons -->
+        <!-- Auth Buttons -->
         <div class="d-flex align-items-center gap-2">
-          <a href="/login" class="btn btn-outline-primary btn-sm px-3"> <i class="bi bi-box-arrow-in-right me-1"></i> Login </a>
+          <% if (user) { %>
+          <!-- Jika sudah login -->
+          <div class="dropdown">
+            <button class="btn btn-outline-primary btn-sm dropdown-toggle px-3" data-bs-toggle="dropdown"><i class="bi bi-person-circle me-1"></i> <%= user.nama %></button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Profil</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item text-danger" href="/auth/logout">Logout</a></li>
+            </ul>
+          </div>
+          <% } else { %>
+          <!-- Jika belum login -->
+          <a href="/auth/get-login" class="btn btn-outline-primary btn-sm px-3"> <i class="bi bi-box-arrow-in-right me-1"></i> Login </a>
           <a href="/auth/signUp" class="btn btn-primary btn-sm px-3"> <i class="bi bi-person-plus me-1"></i> Sign Up </a>
+          <% } %>
         </div>
       </div>
     </div>
