@@ -19,7 +19,7 @@
       <%- include('../partials/sidebar') %>
 
       <div class="main-content flex-fill">
-        <%- include('../partials/header') %>
+        <% if (!noHeader) { %> <%- include('../partials/header') %> <% } %>
 
         <main class="content"><%- body %></main>
       </div>

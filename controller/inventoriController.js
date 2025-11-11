@@ -5,8 +5,8 @@ export const getInventori = async (req, res) => {
   try {
     const dataInventori = await prisma.barang.findMany({
       include: {
-        kategori: true
-      }
+        kategori: true,
+      },
     });
     const kategoriList = await prisma.kategori.findMany({
       select: { id: true, nama: true },
@@ -15,6 +15,7 @@ export const getInventori = async (req, res) => {
     res.render("pages/inventori", {
       title: "Inventory",
       page: "inventory",
+      noHeader: false,
       dataInventori: dataInventori,
       kategoriList: kategoriList,
     });

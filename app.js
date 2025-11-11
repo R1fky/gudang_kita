@@ -45,16 +45,19 @@ app.use((req, res, next) => {
 // roting
 import inventoriRouter from "./router/inventoriRouter.js";
 import authRouter from "./router/authRouter.js";
+import shoppingRouter from "./router/shoppingRouter.js";
 // Routes
 app.get("/", (req, res) => {
   res.render("pages/dashboard", {
     title: "Dashboard",
     page: "dashboard",
+    noHeader: false,
   });
 });
 
 app.use("/inventory", inventoriRouter);
 app.use("/auth", authRouter);
+app.use("/shopping", shoppingRouter);
 
 app.listen(PORT, () => {
   console.log(`Server berjalan di http://localhost:${PORT}`);

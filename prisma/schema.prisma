@@ -14,67 +14,97 @@ enum Role {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  nama       String
-  username   String    @unique
-  password   String
-  role       Role      @default(VIEWER)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  transaksiMasuk   TransaksiMasuk[]
-  transaksiKeluar  TransaksiKeluar[]
-  logAktivitas     LogAktivitas[]
+  id              Int               @id @default(autoincrement())
+  nama            String
+  username        String            @unique
+  password        String
+  role            Role              @default(VIEWER)
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  transaksiMasuk  TransaksiMasuk[]
+  transaksiKeluar TransaksiKeluar[]
+  logAktivitas    LogAktivitas[]
+  orders          Order[] // <--- Tambahkan relasi ke Order
 }
 
 model Kategori {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   nama       String
   deskripsi  String?
   barang     Barang[]
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Barang {
-  id          Int       @id @default(autoincrement())
-  nama        String
-  stok        Int        @default(0)
-  satuan      String
-  harga       Float
-  kategoriId  Int
-  kategori    Kategori   @relation(fields: [kategoriId], references: [id])
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
-  transaksiMasuk   TransaksiMasuk[]
-  transaksiKeluar  TransaksiKeluar[]
+  id              Int               @id @default(autoincrement())
+  nama            String
+  stok            Int               @default(0)
+  satuan          String
+  harga           Float
+  kategoriId      Int
+  kategori        Kategori          @relation(fields: [kategoriId], references: [id])
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  transaksiMasuk  TransaksiMasuk[]
+  transaksiKeluar TransaksiKeluar[]
+  orderItems      OrderItem[] // <--- Tambahkan relasi ke OrderItem
 }
 
 model TransaksiMasuk {
-  id          Int       @id @default(autoincrement())
-  barangId    Int
-  jumlah      Int
-  tanggal     DateTime  @default(now())
-  userId      Int
-  keterangan  String?
-  barang      Barang    @relation(fields: [barangId], references: [id])
-  user        User      @relation(fields: [userId], references: [id])
+  id         Int      @id @default(autoincrement())
+  barangId   Int
+  jumlah     Int
+  tanggal    DateTime @default(now())
+  userId     Int
+  keterangan String?
+  barang     Barang   @relation(fields: [barangId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model TransaksiKeluar {
-  id          Int       @id @default(autoincrement())
-  barangId    Int
-  jumlah      Int
-  tanggal     DateTime  @default(now())
-  userId      Int
-  keterangan  String?
-  barang      Barang    @relation(fields: [barangId], references: [id])
-  user        User      @relation(fields: [userId], references: [id])
+  id         Int      @id @default(autoincrement())
+  barangId   Int
+  jumlah     Int
+  tanggal    DateTime @default(now())
+  userId     Int
+  keterangan String?
+  barang     Barang   @relation(fields: [barangId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model LogAktivitas {
-  id          Int       @id @default(autoincrement())
-  userId      Int
-  aksi        String
-  waktu       DateTime  @default(now())
-  user        User      @relation(fields: [userId], references: [id])
+  id     Int      @id @default(autoincrement())
+  userId Int
+  aksi   String
+  waktu  DateTime @default(now())
+  user   User     @relation(fields: [userId], references: [id])
+}
+
+/////////////////////////////////////////////////////
+// 💳 Model untuk sistem pembayaran Midtrans
+/////////////////////////////////////////////////////
+
+model Order {
+  id              Int         @id @default(autoincrement())
+  orderId         String      @unique // ID unik untuk Midtrans
+  userId          Int
+  totalAmount     Float
+  status          String      @default("pending")
+  paymentType     String? // contoh: gopay, bank_transfer
+  transactionTime DateTime? // waktu transaksi selesai
+  items           OrderItem[]
+  user            User        @relation(fields: [userId], references: [id])
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+}
+
+model OrderItem {
+  id       Int    @id @default(autoincrement())
+  orderId  Int
+  barangId Int
+  quantity Int
+  price    Float
+  barang   Barang @relation(fields: [barangId], references: [id])
+  order    Order  @relation(fields: [orderId], references: [id])
 }
