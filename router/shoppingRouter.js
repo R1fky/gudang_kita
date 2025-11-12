@@ -5,6 +5,6 @@ const router = express.Router();
 router.get("/", shoppingController.getShoppPage);
 
 //payment midtrans
-router.get('/payment', shoppingController.paymentClient)
+router.post("/create-order", shoppingController.createOrder);
 
 export default router;

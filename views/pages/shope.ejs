@@ -91,12 +91,12 @@
           <!-- <p class="card-text text-muted small mb-3">Intel Core i7, 16GB RAM, 512GB SSD</p> -->
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <div class="text-primary fw-bold fs-5"><%= barang.harga %></div>
+              <div class="text-primary fw-bold fs-5"><%= barang.harga.toLocaleString("id-ID") %></div>
               <small class="text-muted">Stok: <strong><%= barang.stok %></strong> unit</small>
             </div>
           </div>
           <div class="d-flex gap-2">
-            <button class="btn btn-outline-primary btn-sm flex-fill" data-bs-toggle="modal" data-bs-target="#detailModal"><i class="bi bi-eye"></i> Detail</button>
+            <button class="btn btn-outline-primary btn-sm flex-fill" data-bs-toggle="modal" data-bs-target="#detailModal<%= barang.id %>"><i class="bi bi-eye"></i> Detail</button>
             <button class="btn btn-primary btn-sm flex-fill add-to-cart"><i class="bi bi-cart-plus"></i> Keranjang</button>
           </div>
         </div>
@@ -228,39 +228,51 @@
   </div>
 
   <!-- Detail Product Modal -->
-  <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+  <% dataBarang.forEach(barang => { %>
+  <div class="modal fade" id="detailModal<%= barang.id %>" tabindex="-1" aria-labelledby="detailModalLabel<%= barang.id %>" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="detailModalLabel">Detail Produk</h5>
+          <h5 class="modal-title fw-bold" id="detailModalLabel<%= barang.id %>">Detail Produk - <%= barang.nama %></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
         <div class="modal-body">
           <div class="row">
+            <!-- Gambar -->
             <div class="col-md-5">
               <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 300px">
                 <i class="bi bi-laptop text-primary" style="font-size: 120px"></i>
               </div>
             </div>
+
+            <!-- Detail Barang -->
             <div class="col-md-7">
-              <span class="badge bg-info text-dark mb-2">Elektronik</span>
-              <h4 class="fw-bold mb-3">Laptop Dell XPS 15</h4>
+              <span class="badge bg-info text-dark mb-2"> <%= barang.kategori ? barang.kategori.nama : "Tidak Ada kategori" %> </span>
+
+              <h4 class="fw-bold mb-3"><%= barang.nama %></h4>
+
               <div class="mb-3">
-                <span class="text-primary fw-bold fs-3">Rp 15.000.000</span>
+                <span class="text-primary fw-bold fs-3"> Rp <%= barang.harga.toLocaleString("id-ID") %> </span>
               </div>
+
               <div class="mb-3">
-                <span class="badge bg-success">Stok Tersedia: 25 unit</span>
+                <span class="badge bg-success"> Stok Tersedia: <%= barang.stok %> </span>
               </div>
-              <h6 class="fw-bold mb-2">Spesifikasi:</h6>
-              <ul class="list-unstyled">
-                <li><i class="bi bi-check-circle text-success me-2"></i>Processor: Intel Core i7 Gen 11</li>
-                <li><i class="bi bi-check-circle text-success me-2"></i>RAM: 16GB DDR4</li>
-                <li><i class="bi bi-check-circle text-success me-2"></i>Storage: 512GB NVMe SSD</li>
-                <li><i class="bi bi-check-circle text-success me-2"></i>Display: 15.6" Full HD IPS</li>
-                <li><i class="bi bi-check-circle text-success me-2"></i>Graphics: NVIDIA GeForce GTX 1650</li>
-              </ul>
+
+              <!-- 🔹 Input Quantity -->
+              <div class="mb-3">
+                <label for="qty<%= barang.id %>" class="form-label fw-semibold">Jumlah:</label>
+                <div class="input-group" style="width: 150px">
+                  <button class="btn btn-outline-secondary btn-sm" type="button" onclick="kurangiQty(<%= barang.id %>)">-</button>
+                  <input type="number" id="qty<%= barang.id %>" class="form-control text-center" value="1" min="1" max="<%= barang.stok %>" />
+                  <button class="btn btn-outline-secondary btn-sm" type="button" onclick="tambahQty(<%= barang.id %>)">+</button>
+                </div>
+              </div>
+
+              <!-- 🔹 Tombol Checkout -->
               <div class="mt-4">
-                <button class="btn btn-primary w-100"><i class="bi bi-cart-plus me-2"></i>Tambah ke Keranjang</button>
+                <button class="btn btn-primary w-100" onclick="checkOut(<%= barang.id %>)"><i class="bi bi-bag-check"></i> Check Me</button>
               </div>
             </div>
           </div>
@@ -268,6 +280,7 @@
       </div>
     </div>
   </div>
+  <% }) %>
 
   <style>
     .product-card {
@@ -305,3 +318,42 @@
     }
   </style>
 </div>
+
+<script>
+  // Fungsi tambah & kurang quantity
+  function tambahQty(id) {
+    const input = document.getElementById(`qty${id}`);
+    input.value = parseInt(input.value) + 1;
+  }
+
+  function kurangiQty(id) {
+    const input = document.getElementById(`qty${id}`);
+    if (parseInt(input.value) > 1) {
+      input.value = parseInt(input.value) - 1;
+    }
+  }
+
+  async function checkOut(id) {
+    try {
+      const qty = document.getElementById(`qty${id}`).value;
+
+      const data = {
+        barangId: id,
+        quantity: qty,
+      };
+
+      const response = await fetch("/shopping/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>
