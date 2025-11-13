@@ -26,59 +26,62 @@ export const getShoppPage = async (req, res) => {
 
 export const createOrder = async (req, res) => {
   try {
-    const data = req.body;
-
+    const { barangId, quantity } = req.body;
     const barang = await prisma.barang.findUnique({
-      where: { id: data.barangId },
+      where: { id: barangId },
     });
-
     if (!barang) {
-      res.json({ message: "Barang Tidak Di Temukan" });
+      console.log("Barang Tidak di Temukan");
     }
-    const total = barang.harga * data.quantity;
-
-    const order = await prisma.order.create({
+    const totalAmount = barang.harga * quantity;
+    const newOrder = await prisma.order.create({
       data: {
         orderId: `ORDER-${Date.now()}`,
-        userId: req.user.id || "guest",
-        totalAmount: total,
+        userId: 1,
+        totalAmount: totalAmount,
         status: "pending",
         items: {
           create: [
             {
               barangId: barang.id,
-              quantity: data.quantity,
+              quantity: quantity,
               price: barang.harga,
             },
           ],
         },
-        include: { item: true },
+      },
+      include: {
+        items: true,
       },
     });
 
-    const snap = new midtransClient.Snap({
+    let snap = new midtransClient.Snap({
       isProduction: false,
       serverKey: process.env.SERVER_KEY,
     });
 
     let parameter = {
       transaction_details: {
-        order_id: barang.id,
-        gross_amount: total,
+        order_id: newOrder.orderId,
+        gross_amount: totalAmount,
       },
-      item_details: [
+      items_details: [
         {
+          id: barang.id,
+          price: barang.harga,
+          quantity: Number(quantity),
           name: barang.nama,
-          quantity: data.quantity,
-          price: total,
         },
       ],
+      customer_details: {
+        first_name: "Guest",
+        email: "guest@example.com",
+      },
     };
 
-    const transaction = snap.createTransaction(parameter);
+    const transaction = await snap.createTransaction(parameter);
     res.json({
-      message: "Berhasil",
-      transaction,
+      snapToken: transaction.token,
     });
   } catch (error) {
     console.log(error);
