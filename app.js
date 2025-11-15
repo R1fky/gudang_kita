@@ -46,7 +46,6 @@ app.use((req, res, next) => {
 import inventoriRouter from "./router/inventoriRouter.js";
 import authRouter from "./router/authRouter.js";
 import shoppingRouter from "./router/shoppingRouter.js";
-("");
 // Routes
 app.get("/", (req, res) => {
   res.render("pages/dashboard", {
@@ -55,6 +54,7 @@ app.get("/", (req, res) => {
     noHeader: false,
   });
 });
+
 
 app.use("/inventory", inventoriRouter);
 app.use("/auth", authRouter);
