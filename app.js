@@ -55,6 +55,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/auth/get-user", (req, res) => {
+  if (!req.user) return res.json({ user: null });
+  return res.json({ user: req.user });
+});
 
 app.use("/inventory", inventoriRouter);
 app.use("/auth", authRouter);

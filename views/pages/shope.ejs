@@ -333,26 +333,35 @@
     }
   }
 
+  async function getUserLogin() {
+    try {
+      const response = await fetch("/auth/get-user", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      const result = await response.json();
+      return result.user;
+    } catch (err) {
+      console.log(`Error Message ${err}`);
+    }
+  }
+
   async function checkOut(id) {
     try {
+      const user = await getUserLogin(); // <-- harus pakai await
+      console.log("User yang login:", user);
       const qty = Number(document.getElementById(`qty${id}`).value);
-
       const response = await fetch("/shopping/create-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ barangId: id, quantity: qty }),
+        body: JSON.stringify({ barangId: id, quantity: qty, userId: user }),
       });
+
       const result = await response.json();
-      if (result.snapToken) {
-        window.snap.pay(result.snapToken, {
-          onSuccess: function (result) {
-            alert("Pembayaran berhasil!");
-            console.log(result);
-          },
-        });
-      }
+      
     } catch (error) {
       console.log(error);
     }

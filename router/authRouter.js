@@ -17,7 +17,7 @@ router.get("/get-login", (req, res) => {
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/auth/get-login" }), (req, res) => {
-  res.redirect("/inventory");
+  res.redirect("/");
 });
 
 // logout
@@ -36,6 +36,7 @@ router.get("/logout", (req, res) => {
   });
 });
 
+//registrasi
 router.get("/signUp", authController.getSignUp);
 router.post("/sign-up", authController.register);
 
